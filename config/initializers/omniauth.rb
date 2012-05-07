@@ -1,5 +1,6 @@
-OmniAuth.config.full_host = "http://localhost:3000"
-
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :google, 'localhost', '3op5Q-KnavdmFlBp1EVY8p1o', :scope => 'https://mail.google.com/mail/feed/atom/' 
+  # If you don't need a refresh token -- if you're only using Google for account creation/auth and don't need google services -- set the access_type to 'online'.
+  # Also, set the approval prompt to an empty string, since otherwise it will be set to 'force', which makes users manually approve to the Oauth every time they log in.
+  # See http://googleappsdeveloper.blogspot.com/2011/10/upcoming-changes-to-oauth-20-endpoint.html
+  provider :google_oauth2, "68506321525-u99bj99kau975u1ftd29ljpffjnr6l8t.apps.googleusercontent.com", "3op5Q-KnavdmFlBp1EVY8p1o", {access_type: 'online', approval_prompt: ''}
 end
