@@ -32,6 +32,9 @@ class FeedItemsController < ApplicationController
   # POST /feed_items
   # POST /feed_items.json
   def create
+    token = Token.find(params[:token])
+    raise unless token # lol, dongs
+
     @feed_item = FeedItem.new(params[:feed_item])
 
     respond_to do |format|
