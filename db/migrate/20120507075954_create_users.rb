@@ -4,7 +4,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :google_uid
       t.string :email
       t.string :name
-      t.string :token
+      t.string :google_token
 
       t.timestamps
     end

@@ -10,7 +10,7 @@ class SessionController < ApplicationController
     unless user
       user = User.new(:name   => auth[:info]["name"],
                       :email  => auth[:info]["email"], 
-                      :google_token  => auth[:info]["token"],
+                      :google_token  => auth[:credentials]["token"],
                       :google_uid => auth[:info]["google_uid"])
       user.save
     end
