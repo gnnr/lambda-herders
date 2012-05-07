@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  google_uid: MyString
+  email: MyString
+  name: MyString
+  token: MyString
+
+two:
+  google_uid: MyString
+  email: MyString
+  name: MyString
+  token: MyString
