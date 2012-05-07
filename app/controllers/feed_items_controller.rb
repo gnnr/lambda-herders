@@ -33,7 +33,6 @@ class FeedItemsController < ApplicationController
   # POST /feed_items.json
   def create
     token = Token.where(:token => params[:token]).first
-    
     raise unless token # lol, dongs
 
     @feed_item = FeedItem.new(params[:feed_item])
