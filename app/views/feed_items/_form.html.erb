@@ -1,17 +1,9 @@
 <%= form_for(@feed_item) do |f| %>
-  <% if @feed_item.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@feed_item.errors.count, "error") %> prohibited this feed_item from being saved:</h2>
-
-      <ul>
-      <% @feed_item.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="actions">
+    <%= f.label :text %> : <%= f.text_field :text %> </ br>
+    <%= f.label :token %> : <%= f.text_field :token %></ br>
+    <%= f.label :category %> : <%= f.text_field :category %></ br>
+
     <%= f.submit %>
   </div>
 <% end %>

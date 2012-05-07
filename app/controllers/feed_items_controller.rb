@@ -1,5 +1,8 @@
 class FeedItemsController < ApplicationController
-
+  
+  def new
+    @feed_item = FeedItem.new
+  end
   # GET /feed_items
   # GET /feed_items.json
   def index
@@ -32,25 +35,26 @@ class FeedItemsController < ApplicationController
   # POST /feed_items
   # POST /feed_items.json
   def create
-    token = Token.where(:token => params[:token]).first
-
+    puts params[:feed_item][:token]
+    token = Token.where(:token => params[:feed_item][:token]).first
+     
     unless token
-      render :text => "No token was found, here's the deserialized object created on the backend #{params}"
+      return render :text => "No token was found, here's the deserialized object created on the backend #{params}"
     end
-
-    @feed_item = FeedItem.new(params[:feed_item])
+    
+    @message = params[:feed_item][:message]
+    @category = params[:feed_item][:category] 
+    
+    @feed_item = FeedItem.new(:text => @message, :category => @category)
     @feed_item.token = token
 
-    respond_to do |format|
-      if @feed_item.save
-        format.html { redirect_to @feed_item, notice: 'Feed item was successfully created.' }
-        format.json { render json: @feed_item, status: :created, location: @feed_item }
-      else
-        format.html { render text: "It's a frat! We can't repel bros of this magnitude!" }
-        format.json { render json: @feed_item.errors, status: :unprocessable_entity }
-      end
+    if @feed_item.save
+      return render :text => @feed_item
     end
+
+    return
   end
+
 
   # DELETE /feed_items/1
   # DELETE /feed_items/1.json
