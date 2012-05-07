@@ -7,8 +7,8 @@ var utils = {
 
 var chaitin = (function(mixin) {
     var m = mixin || {};
-    m.WSPORT = 1234;
-    m.WSHOST = "localhost";
+    m.WSPORT = 9000;
+    m.WSHOST = "baybo.it";
     m.ENDPOINT = "ws://" + m.WSHOST + ":" + m.WSPORT + "/ws";
     m.LISTID = "item_list";
     m.socket = null;
