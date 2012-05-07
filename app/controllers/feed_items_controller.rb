@@ -38,7 +38,7 @@ class FeedItemsController < ApplicationController
         format.html { redirect_to @feed_item, notice: 'Feed item was successfully created.' }
         format.json { render json: @feed_item, status: :created, location: @feed_item }
       else
-        format.html { render action: "new" }
+        format.html { render text: "It's a frat! We can't repel bros of this magnitude!" }
         format.json { render json: @feed_item.errors, status: :unprocessable_entity }
       end
     end
@@ -52,6 +52,7 @@ class FeedItemsController < ApplicationController
     if @feed_item.token == params[:token] 
       @feed_item.destroy
     end
+
     respond_to do |format|
       format.html { redirect_to feed_items_url }
       format.json { head :no_content }
