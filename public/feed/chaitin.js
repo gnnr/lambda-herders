@@ -7,7 +7,10 @@ var utils = {
 
 var chaitin = (function(mixin) {
     var m = mixin || {};
-    m.ENDPOINT = "ws://localhost:1234";
+    m.WSPORT = 1234;
+    m.WSHOST = "localhost";
+    m.ENDPOINT = "ws://" + m.WSHOST + ":" + m.WSPORT + "/ws";
+    m.LISTID = "item_list";
     m.socket = null;
     m.gentxt = function () {
 	var res = [];
@@ -16,8 +19,19 @@ var chaitin = (function(mixin) {
 	}
 	return res.join(' ') + '.';
     }
+    m.insert_row_obj = function(obj) {
+	m.list.insertBefore(obj, m.list.firstChild);
+    }
+    m.row_obj_txt = function(txt) {
+	var li = document.createElement("li");
+	li.innerHTML = txt;
+	return li;
+    }
+    m.handle_data = function(txt) {
+	m.insert_row_obj(m.row_obj_txt(txt));
+    }
     m.create_socket = function (endpoint) {
-	console.log(endpoint);
+	console.info(endpoint);
 	var socket = new WebSocket(endpoint);
 	socket.onopen = function() {
 	    txt = m.gentxt();
@@ -25,13 +39,14 @@ var chaitin = (function(mixin) {
 	    alert("Socket has been opened! Sending text: " + txt);
 	}
 	socket.onmessage = function(msg) {  
-	    alert(msg); //Awesome!  
+	    m.handle_data(msg.data);
+	    console.info(msg); //Awesome!  
 	}
 	socket.onerror = function(err) {
-	    alert(err);
+	    console.info(err);
 	}
 	socket.onclose = function(msg) {
-	    alert(msg);
+	    console.info(msg);
 	}
 	return socket;
     }
@@ -42,6 +57,8 @@ var chaitin = (function(mixin) {
 	return m.socket;
     }
     m.init = function () {
+	m.list = document.getElementById(m.LISTID);
+	console.info(m.list);
 	var asock = m.get_socket();
     }
     return m;
