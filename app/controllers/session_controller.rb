@@ -15,8 +15,8 @@ class SessionController < ApplicationController
       user.save
     end
 
-    unless user.token 
-      token = Token.new(:user_id => user.id, :token => Digest::SHA1.hexdigest(user.google_token))
+    unless user.token
+      token = Token.create(:user_id => user.id, :token => Digest::SHA1.hexdigest(user.google_token))
     end
 
     session[:user_id] = user.id
