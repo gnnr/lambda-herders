@@ -20,7 +20,8 @@ class FeedItemsController < ApplicationController
   # GET /feed_items/1
   # GET /feed_items/1.json
   def show
-    @feed_item = FeedItem.find(params[:id])
+    item = FeedItem.find(params[:id])
+    @feed_item = { :message => item.message, :category => item.category } 
 
     respond_to do |format|
       format.html # show.html.erb
@@ -31,14 +32,19 @@ class FeedItemsController < ApplicationController
   # POST /feed_items
   # POST /feed_items.json
   def create
+    token = Token.where(:token => params[:token]).first
+    unless token
+      render :text => "No token was found, here's the deserialized object created on the backend #{params}"
+    end
     @feed_item = FeedItem.new(params[:feed_item])
+    @feed_item.token = token
 
     respond_to do |format|
       if @feed_item.save
         format.html { redirect_to @feed_item, notice: 'Feed item was successfully created.' }
         format.json { render json: @feed_item, status: :created, location: @feed_item }
       else
-        format.html { render action: "new" }
+        format.html { render text: "It's a frat! We can't repel bros of this magnitude!" }
         format.json { render json: @feed_item.errors, status: :unprocessable_entity }
       end
     end
@@ -52,6 +58,7 @@ class FeedItemsController < ApplicationController
     if @feed_item.token == params[:token] 
       @feed_item.destroy
     end
+
     respond_to do |format|
       format.html { redirect_to feed_items_url }
       format.json { head :no_content }
