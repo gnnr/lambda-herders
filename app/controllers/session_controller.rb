@@ -5,22 +5,22 @@ class SessionController < ApplicationController
   def create
     auth = request.env["omniauth.auth"]
 
-    user = User.where(:email => auth[:info]["email"]).first
+    @user = User.where(:email => auth[:info]["email"]).first
 
-    unless user
-      user = User.new(:name   => auth[:info]["name"],
+    unless @user
+      @user = User.new(:name   => auth[:info]["name"],
                       :email  => auth[:info]["email"], 
                       :google_token  => auth[:credentials]["token"],
                       :google_uid => auth[:info]["google_uid"])
-      user.save
+      @user.save
     end
 
-    unless user.token
-      token = Token.create(:user_id => user.id, :token => Digest::SHA1.hexdigest(user.google_token))
+    unless @user.token
+      token = Token.create(:user_id => @user.id, :token => Digest::SHA1.hexdigest(@user.google_token))
     end
 
-    session[:user_id] = user.id
-    render :text => 'successfully logged in'
+    session[:user_id] = @user.id
+    render :text => @user.token.token 
   end
 
   def destroy
