@@ -1,0 +1,21 @@
+<h1>Listing feed_items</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @feed_items.each do |feed_item| %>
+  <tr>
+    <td><%= link_to 'Show', feed_item %></td>
+    <td><%= link_to 'Edit', edit_feed_item_path(feed_item) %></td>
+    <td><%= link_to 'Destroy', feed_item, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Feed item', new_feed_item_path %>
