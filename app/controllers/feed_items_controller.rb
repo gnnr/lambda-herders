@@ -32,10 +32,12 @@ class FeedItemsController < ApplicationController
   # POST /feed_items
   # POST /feed_items.json
   def create
-    token = Token.find(params[:token])
+    token = Token.where(:token => params[:token]).first
+    
     raise unless token # lol, dongs
 
     @feed_item = FeedItem.new(params[:feed_item])
+    @feed_item.token = token
 
     respond_to do |format|
       if @feed_item.save
