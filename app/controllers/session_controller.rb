@@ -4,19 +4,27 @@ require 'digest/sha1'
 class SessionController < ApplicationController
   def create
     auth = request.env["omniauth.auth"]
-    user = User.new(:name   => auth[:info]["name"],
-                    :email  => auth[:info]["email"], 
-                    :google_token  => auth[:info]["token"],
-                    :google_uid => auth[:info]["google_uid"])
-    user.save
-    token = Token.new(:user_id => user.id, :token => Digest::SHA1.hexdigest(user.google_token))
+
+    user = User.where(:email => auth[:info]["email"]).first
+
+    unless user
+      user = User.new(:name   => auth[:info]["name"],
+                      :email  => auth[:info]["email"], 
+                      :google_token  => auth[:info]["token"],
+                      :google_uid => auth[:info]["google_uid"])
+      user.save
+    end
+
+    unless user.token 
+      token = Token.new(:user_id => user.id, :token => Digest::SHA1.hexdigest(user.google_token))
+    end
 
     session[:user_id] = user.id
-    redirect_to root_url, :notice => "Signed in!"
+    render :text => 'successfully logged in'
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_url, :notice => "Signed out!"
+    render :text => 'signed out' 
   end
 end
