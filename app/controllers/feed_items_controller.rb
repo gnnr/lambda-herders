@@ -20,7 +20,8 @@ class FeedItemsController < ApplicationController
   # GET /feed_items/1
   # GET /feed_items/1.json
   def show
-    @feed_item = FeedItem.find(params[:id])
+    item = FeedItem.find(params[:id])
+    @feed_item = { :message => item.message, :category => item.category } 
 
     respond_to do |format|
       format.html # show.html.erb
