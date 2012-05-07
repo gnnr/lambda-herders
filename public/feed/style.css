@@ -1,0 +1,65 @@
+html, body {
+    font-family: 'Ubuntu Mono', sans-serif;
+}
+body { 
+    font-size: 90%;
+    text-align: center;
+    margin: 0;
+}
+a {
+    color: #333;
+}
+.header {
+    width: 100%;
+    background: #333;
+    height: 0.5em;
+}
+
+.logo {
+    font-size: 90px;
+}
+
+/**
+ * doing it with dls
+ */
+dl.items {
+    margin: 0 auto;
+    width: 50%;
+    display: block;
+}
+dl.items dt {
+    float: left;
+
+}
+dl.items dd {
+    text-align: right;
+
+}
+dl.items dt:nth-child(4n+1) {
+    background: #EEE;
+}
+dl.items dd:nth-child(4n+2) {
+    background: #EEE;
+}
+
+/**
+ * doing it with lis
+ */
+.items {
+    list-style-type: none;
+    padding-left: 0;
+}
+.items li {
+    padding: 1em;
+    background: #FFF;
+    border: 1px solid #333;
+    margin: 1em;
+}
+.items li:nth-child(1) { zoom: 200% }
+.items li:nth-child(2) { zoom: 123.6% } /* 200 * phi^-(1-2) */
+.items li:nth-child(n+3) { zoom: 76.4% } /* 200 * ph^-(1-3) */
+
+.items li .key {
+    font-weight: bold;
+}
+
