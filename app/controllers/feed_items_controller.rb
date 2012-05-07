@@ -33,9 +33,11 @@ class FeedItemsController < ApplicationController
   # POST /feed_items.json
   def create
     token = Token.where(:token => params[:token]).first
+
     unless token
       render :text => "No token was found, here's the deserialized object created on the backend #{params}"
     end
+
     @feed_item = FeedItem.new(params[:feed_item])
     @feed_item.token = token
 
