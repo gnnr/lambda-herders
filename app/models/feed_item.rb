@@ -1,4 +1,4 @@
 class FeedItem < ActiveRecord::Base
   attr_accessible :category, :text 
-  has_one :token
+  belongs_to :token
 end
