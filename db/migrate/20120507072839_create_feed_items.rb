@@ -3,7 +3,7 @@ class CreateFeedItems < ActiveRecord::Migration
     create_table :feed_items do |t|
       t.text :text
       t.string :category
-
+      t.integer :token_id
       t.timestamps
     end
   end
